@@ -5,8 +5,8 @@ import { ProductFactory } from './ProductFactory'
 
 export const OrderFactory = Factory.define(Order, ({ faker }) => {
   return {
-    // productId: faker.datatype.number(),
-    userId: faker.datatype.number(),
+    // product_id: faker.datatype.number(),
+    // userId: faker.datatype.number(),
     cost: faker.datatype.number(),
     quantity: faker.datatype.number({
       min: 0,

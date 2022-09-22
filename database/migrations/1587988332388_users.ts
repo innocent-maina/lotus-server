@@ -12,7 +12,14 @@ export default class UsersSchema extends BaseSchema {
       table.string('email', 255).notNullable()
       table.string('password', 180).notNullable()
       table.enum('role', ['User', 'Employee', 'Admin']).defaultTo('User')
-      table.timestamps(true)
+      // table.timestamps(true)
+      table.string('remember_me_token').nullable()
+
+      /**
+       * Uses timestampz for PostgreSQL and DATETIME2 for MSSQL
+       */
+      table.timestamp('created_at', { useTz: true }).notNullable()
+      table.timestamp('updated_at', { useTz: true }).notNullable()
     })
   }
 

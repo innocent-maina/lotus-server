@@ -1,14 +1,15 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Service from '../../Models/Service'
+import Categories from '../../Models/Categories'
+// import User from 'App/Models/User'
 
-export default class ServiceController {
+export default class CategoriesController {
   public async index({ response }: HttpContextContract) {
     try {
-      const serviceRequests = await Service.query().select('*').from('service_requests')
+      const categories = await Categories.query().select('*').from('categories')
       return response.json({
         success: true,
-        message: 'ServiceRequests retrieved successfully',
-        data: serviceRequests,
+        message: 'categories retrieved successfully',
+        data: categories,
       })
     } catch (error) {
       return response.json({
@@ -21,17 +22,17 @@ export default class ServiceController {
 
   public async show({ params, response }: HttpContextContract) {
     try {
-      const serviceRequest = await Service.find(params.id)
-      if (serviceRequest) {
+      const categories = await Categories.find(params.id)
+      if (categories) {
         return response.json({
           success: true,
-          message: 'ServiceRequest found',
-          data: serviceRequest,
+          message: 'Categories found',
+          data: categories,
         })
       } else {
         return response.json({
           success: true,
-          message: 'ServiceRequest not found',
+          message: 'Categories not found',
           data: null,
         })
       }
@@ -47,11 +48,11 @@ export default class ServiceController {
   public async store({ request, response }: HttpContextContract) {
     try {
       const data = request.all()
-      const serviceRequest = await Service.create(data)
+      const categories = await Categories.create(data)
       return response.json({
         success: true,
-        message: 'ServiceRequest created successfully',
-        data: serviceRequest,
+        message: 'Categories created successfully',
+        data: categories,
       })
     } catch (error) {
       return response.json({
@@ -64,20 +65,21 @@ export default class ServiceController {
 
   public async update({ params, request, response }: HttpContextContract) {
     try {
-      const serviceRequest = await Service.findOrFail(params.id)
-      if (!serviceRequest) {
+      const categories = await Categories.findOrFail(params.id)
+      if (!categories) {
         return response.json({
           success: true,
-          message: 'ServiceRequest not found',
+          message: 'Categories not found',
           data: null,
         })
       } else {
-        serviceRequest.merge(request.all())
-        await serviceRequest.save()
+        categories.merge(request.all())
+
+        await categories.save()
         return response.json({
           success: true,
-          message: 'ServiceRequest updated successfully',
-          data: serviceRequest,
+          message: 'Categories updated successfully',
+          data: categories,
         })
       }
     } catch (error) {
@@ -91,19 +93,19 @@ export default class ServiceController {
 
   public async delete({ params, response }: HttpContextContract) {
     try {
-      const serviceRequest = await Service.find(params.id)
-      if (serviceRequest) {
-        serviceRequest.delete()
+      const categories = await Categories.find(params.id)
+      if (categories) {
+        categories.delete()
         return response.json({
           success: true,
-          message: 'Successfully deleted the serviceRequest',
+          message: 'Successfully deleted the categories',
           data: null,
         })
       } else {
         return response.json({
           success: false,
-          message: 'ServiceRequest does not exist',
-          data: serviceRequest,
+          message: 'Categories does not exist',
+          data: categories,
         })
       }
     } catch (error) {

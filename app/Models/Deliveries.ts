@@ -1,32 +1,26 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
-import Product from 'App/Models/Product'
+import Order from 'App/Models/Order'
 import User from 'App/Models/User'
 
-export default class Feedback extends BaseModel {
+export default class Deliveries extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public productId: number
+  public orderId: number
 
   @column()
   public userId: number
 
   @column()
-  public productName: string
+  public paymentStatus: boolean
 
   @column()
-  public userEmail: string
+  public dispatchStatus: boolean
 
   @column()
-  public description: string
-
-  @column()
-  public date: Date
-
-  @column()
-  public rate: number
+  public deliveryStatus: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -34,8 +28,8 @@ export default class Feedback extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => Product)
-  public product: BelongsTo<typeof Product>
+  @belongsTo(() => Order)
+  public order: BelongsTo<typeof Order>
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>

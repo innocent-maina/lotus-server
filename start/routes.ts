@@ -45,40 +45,29 @@ Route.group(() => {
     Route.delete('/:id', 'OrderController.delete')
   }).prefix('/order')
 
+  // categories routes
+  Route.group(() => {
+    Route.get('/', 'CategoriesController.index')
+    Route.post('/', 'CategoriesController.store')
+    Route.get('/:id', 'CategoriesController.show')
+    Route.put('/:id', 'CategoriesController.update')
+    Route.delete('/:id', 'CategoriesController.delete')
+  }).prefix('/categories')
+
+  // deliveries routes
+  Route.group(() => {
+    Route.get('/', 'DeliveriesController.index')
+    Route.post('/', 'DeliveriesController.store')
+    Route.get('/:id', 'DeliveriesController.show')
+    Route.put('/:id', 'DeliveriesController.update')
+    Route.delete('/:id', 'DeliveriesController.delete')
+  }).prefix('/deliveries')
+
   //user updating routes
   Route.group(() => {
     Route.put('/:id', 'UserController.update')
     Route.delete('/:id', 'UserController.delete')
   }).prefix('/user-change')
-
-  // feedback routes
-  Route.group(() => {
-    Route.get('/', 'FeedbackController.index')
-    Route.get('/product/:id', 'FeedbackController.productFeedback')
-    Route.post('/', 'FeedbackController.store')
-    Route.get('/:id', 'FeedbackController.show')
-    Route.put('/:id', 'FeedbackController.update')
-    Route.delete('/:id', 'FeedbackController.delete')
-  }).prefix('/feedback')
-
-  // maintenance routes
-  Route.group(() => {
-    Route.get('/', 'ServiceRequestController.index')
-    Route.post('/', 'ServiceRequestController.store')
-    Route.get('/:id', 'ServiceRequestController.show')
-    Route.put('/:id', 'ServiceRequestController.update')
-    Route.delete('/:id', 'ServiceRequestController.delete')
-  }).prefix('/service-request')
-
-  // worklog routes
-  Route.group(() => {
-    Route.get('/', 'WorkLogController.index')
-    Route.get('/user/:id', 'WorkLogController.userWorkLog') // done
-    Route.post('/', 'WorkLogController.store')
-    Route.get('/:id', 'WorkLogController.show')
-    Route.put('/:id', 'WorkLogController.update')
-    Route.delete('/:id', 'WorkLogController.delete')
-  }).prefix('/worklog')
 })
   .prefix('/api/v1')
   .middleware('auth')
