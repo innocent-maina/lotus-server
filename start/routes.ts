@@ -70,4 +70,4 @@ Route.group(() => {
   }).prefix('/user-change')
 })
   .prefix('/api/v1')
-  .middleware('auth')
+  // .middleware('auth')
