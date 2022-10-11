@@ -45,6 +45,38 @@ export default class DeliveriesController {
     }
   }
 
+  public async sellerDeliveries({ params, response }: HttpContextContract) {
+    try {
+      const deliveries = await Deliveries.query()
+        .select('*')
+        .preload('user')
+        .preload('order')
+        .from('deliveries')
+        .whereHas('order', (query) => {
+          query.where('seller_id', params.id)
+        })
+      if (deliveries) {
+        return response.json({
+          success: true,
+          message: 'Single sellers deliveries found',
+          data: deliveries,
+        })
+      } else {
+        return response.json({
+          success: true,
+          message: 'Single sellers deliveries not found',
+          data: null,
+        })
+      }
+    } catch (error) {
+      return response.json({
+        success: false,
+        message: error.message,
+        data: error,
+      })
+    }
+  }
+
   public async store({ request, response }: HttpContextContract) {
     try {
       const data = request.all()

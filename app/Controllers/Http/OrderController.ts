@@ -5,7 +5,7 @@ import Order from '../../Models/Order'
 export default class OrderController {
   public async index({ response }: HttpContextContract) {
     try {
-      const orders = await Order.query().select('*').from('orders').preload('user').preload('product')
+      const orders = await Order.query().select('*').from('orders').preload('user').preload('seller').preload('product')
       return response.json({
         success: true,
         message: 'Orders retrieved successfully',
@@ -20,23 +20,56 @@ export default class OrderController {
     }
   }
 
-  // get single user's orders
-  public async userOrder({ response, params }: HttpContextContract) {
+  // // get single user's orders
+  // public async userOrder({ response, params }: HttpContextContract) {
+  //   try {
+  //     // const user = await User.find(params.id)
+  //     const orders = await Order.query()
+  //       .select('*')
+  //       .preload('user')
+  //       .from('orders')
+  //       // .where('user_id', params.id)
+  //       .whereHas('user', (query) => {
+  //         query.where('user_id', params.id)
+  //       })
+  //     return response.json({
+  //       success: true,
+  //       message: 'Single User Orders retrieved successfully',
+  //       data: orders,
+  //     })
+  //   } catch (error) {
+  //     return response.json({
+  //       success: false,
+  //       message: error.message,
+  //       data: error,
+  //     })
+  //   }
+  // }
+
+  public async sellerOrders({ params, response }: HttpContextContract) {
     try {
-      // const user = await User.find(params.id)
       const orders = await Order.query()
         .select('*')
         .preload('user')
+        .preload('seller')
         .from('orders')
-        // .where('user_id', params.id)
+        .preload('product')
         .whereHas('user', (query) => {
-          query.where('user_id', params.id)
+          query.where('seller_id', params.id)
         })
-      return response.json({
-        success: true,
-        message: 'Single User Orders retrieved successfully',
-        data: orders,
-      })
+      if (orders) {
+        return response.json({
+          success: true,
+          message: 'Single sellers orders found',
+          data: orders,
+        })
+      } else {
+        return response.json({
+          success: true,
+          message: 'Single sellers orders not found',
+          data: null,
+        })
+      }
     } catch (error) {
       return response.json({
         success: false,

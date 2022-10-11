@@ -14,6 +14,9 @@ export default class Order extends BaseModel {
   public userId: number
 
   @column()
+  public sellerId: number
+
+  @column()
   public cost: number
 
   @column()
@@ -39,4 +42,7 @@ export default class Order extends BaseModel {
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
+
+  @belongsTo(() => User)
+  public seller: BelongsTo<typeof User>
 }

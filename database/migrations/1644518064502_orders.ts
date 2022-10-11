@@ -14,6 +14,7 @@ export default class Orders extends BaseSchema {
         .inTable('products')
         .onDelete('CASCADE')
       table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
+      table.integer('seller_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
       table.string('product_name')
       table.string('user_email')
       table.integer('cost')

@@ -5,8 +5,6 @@ import { ProductFactory } from './ProductFactory'
 
 export const OrderFactory = Factory.define(Order, ({ faker }) => {
   return {
-    // product_id: faker.datatype.number(),
-    // userId: faker.datatype.number(),
     cost: faker.datatype.number(),
     quantity: faker.datatype.number({
       min: 0,
@@ -18,5 +16,6 @@ export const OrderFactory = Factory.define(Order, ({ faker }) => {
   }
 })
   .relation('user', () => UserFactory)
+  .relation('seller', () => UserFactory)
   .relation('product', () => ProductFactory)
   .build()

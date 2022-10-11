@@ -42,6 +42,7 @@ Route.group(() => {
     Route.get('/user/:id', 'OrderController.userOrder') // done
     Route.post('/', 'OrderController.store')
     Route.get('/:id', 'OrderController.show')
+    Route.get('orders/:id', 'OrderController.sellerOrders')
     Route.put('/:id', 'OrderController.update')
     Route.delete('/:id', 'OrderController.delete')
   }).prefix('/order')
@@ -60,6 +61,7 @@ Route.group(() => {
     Route.get('/', 'DeliveriesController.index')
     Route.post('/', 'DeliveriesController.store')
     Route.get('/:id', 'DeliveriesController.show')
+    Route.get('deliveries/:id', 'DeliveriesController.sellerDeliveries')
     Route.put('/:id', 'DeliveriesController.update')
     Route.delete('/:id', 'DeliveriesController.delete')
   }).prefix('/deliveries')

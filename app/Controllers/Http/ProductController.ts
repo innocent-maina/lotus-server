@@ -48,6 +48,7 @@ export default class ProductController {
     try {
       const product = await Product.query()
         .select('*')
+        .preload('user')
         .from('products')
         .whereHas('user', (query) => {
           query.where('user_id', params.id)
