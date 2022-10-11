@@ -5,7 +5,7 @@ import Order from '../../Models/Order'
 export default class OrderController {
   public async index({ response }: HttpContextContract) {
     try {
-      const orders = await Order.query().select('*').from('orders').preload('user')
+      const orders = await Order.query().select('*').from('orders').preload('user').preload('product')
       return response.json({
         success: true,
         message: 'Orders retrieved successfully',

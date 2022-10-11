@@ -5,7 +5,7 @@ import Deliveries from '../../Models/Deliveries'
 export default class DeliveriesController {
   public async index({ response }: HttpContextContract) {
     try {
-      const deliveries = await Deliveries.query().select('*').from('deliveries')
+      const deliveries = await Deliveries.query().select('*').from('deliveries').preload('user').preload('order')
       return response.json({
         success: true,
         message: 'Deliveries retrieved successfully',
@@ -20,31 +20,6 @@ export default class DeliveriesController {
     }
   }
 
-  // // get single user's deliveries
-  // public async userOrder({ response, params }: HttpContextContract) {
-  //   try {
-  //     // const user = await User.find(params.id)
-  //     const deliveries = await Deliveries.query()
-  //       .select('*')
-  //       .preload('user')
-  //       .from('deliveries')
-  //       // .where('user_id', params.id)
-  //       .whereHas('user', (query) => {
-  //         query.where('user_id', params.id)
-  //       })
-  //     return response.json({
-  //       success: true,
-  //       message: 'Single User Deliveries retrieved successfully',
-  //       data: deliveries,
-  //     })
-  //   } catch (error) {
-  //     return response.json({
-  //       success: false,
-  //       message: error.message,
-  //       data: error,
-  //     })
-  //   }
-  // }
   public async show({ params, response }: HttpContextContract) {
     try {
       const deliveries = await Deliveries.find(params.id)
