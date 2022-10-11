@@ -44,6 +44,36 @@ export default class ProductController {
     }
   }
 
+  public async sellerProducts({ params, response }: HttpContextContract) {
+    try {
+      const product = await Product.query()
+        .select('*')
+        .from('products')
+        .whereHas('user', (query) => {
+          query.where('user_id', params.id)
+        })
+      if (product) {
+        return response.json({
+          success: true,
+          message: 'Single sellers products found',
+          data: product,
+        })
+      } else {
+        return response.json({
+          success: true,
+          message: 'Single sellers products not found',
+          data: null,
+        })
+      }
+    } catch (error) {
+      return response.json({
+        success: false,
+        message: error.message,
+        data: error,
+      })
+    }
+  }
+
   public async store({ request, response }: HttpContextContract) {
     try {
       const data = request.all()
