@@ -21,29 +21,86 @@ export default class OrderController {
   }
 
   // get single user's orders
-  public async buyerOrders({ params, response }: HttpContextContract) {
+  // public async buyerOrders({ params, response }: HttpContextContract) {
+  //   try {
+  //     const orders = await Order.query()
+  //       .select('*')
+  //       .preload('user')
+  //       .preload('product')
+  //       .from('orders')
+  //       .whereHas('user', (query) => {
+  //         query.where('user_id', params.id)
+  //       })
+  //     if (orders) {
+  //       return response.json({
+  //         success: true,
+  //         message: 'Single sellers orders found',
+  //         data: orders,
+  //       })
+  //     } else {
+  //       return response.json({
+  //         success: true,
+  //         message: 'Single sellers orders not found',
+  //         data: null,
+  //       })
+  //     }
+  //   } catch (error) {
+  //     return response.json({
+  //       success: false,
+  //       message: error.message,
+  //       data: error,
+  //     })
+  //   }
+  // }
+
+  // public async sellerOrders({ params, response }: HttpContextContract) {
+  //   try {
+  //     const orders = await Order.query()
+  //       .select('*')
+  //       .preload('user')
+  //       .preload('seller')
+  //       .from('orders')
+  //       .preload('product')
+  //       .whereHas('user', (query) => {
+  //         query.where('seller_id', params.id)
+  //       })
+  //     if (orders) {
+  //       return response.json({
+  //         success: true,
+  //         message: 'Single sellers orders found',
+  //         data: orders,
+  //       })
+  //     } else {
+  //       return response.json({
+  //         success: true,
+  //         message: 'Single sellers orders not found',
+  //         data: null,
+  //       })
+  //     }
+  //   } catch (error) {
+  //     return response.json({
+  //       success: false,
+  //       message: error.message,
+  //       data: error,
+  //     })
+  //   }
+  // }
+
+  // Seller orders
+  public async sellerOrders({ params, response }: HttpContextContract) {
     try {
       const orders = await Order.query()
         .select('*')
-        .preload('user')
-        .preload('product')
         .from('orders')
-        .whereHas('user', (query) => {
-          query.where('user_id', params.id)
-        })
-      if (orders) {
-        return response.json({
-          success: true,
-          message: 'Single sellers orders found',
-          data: orders,
-        })
-      } else {
-        return response.json({
-          success: true,
-          message: 'Single sellers orders not found',
-          data: null,
-        })
-      }
+        .where('seller_id', params.id)
+        .preload('product')
+        .preload('seller')
+        .preload('user')
+      return response.json({
+        success: true,
+        message: 'Single sellers orders  retrieved successfully',
+        data: orders,
+      })
     } catch (error) {
       return response.json({
         success: false,
@@ -53,30 +110,21 @@ export default class OrderController {
     }
   }
 
-  public async sellerOrders({ params, response }: HttpContextContract) {
+  // Buyer orders
+  public async buyerOrders({ params, response }: HttpContextContract) {
     try {
       const orders = await Order.query()
         .select('*')
-        .preload('user')
-        .preload('seller')
         .from('orders')
+        .where('user_id', params.id)
         .preload('product')
-        .whereHas('user', (query) => {
-          query.where('seller_id', params.id)
-        })
-      if (orders) {
-        return response.json({
-          success: true,
-          message: 'Single sellers orders found',
-          data: orders,
-        })
-      } else {
-        return response.json({
-          success: true,
-          message: 'Single sellers orders not found',
-          data: null,
-        })
-      }
+        .preload('seller')
+        .preload('user')
+      return response.json({
+        success: true,
+        message: 'Single buyer orders  retrieved successfully',
+        data: orders,
+      })
     } catch (error) {
       return response.json({
         success: false,
@@ -85,6 +133,8 @@ export default class OrderController {
       })
     }
   }
+
+
   public async show({ params, response }: HttpContextContract) {
     try {
       const order = await Order.find(params.id)
